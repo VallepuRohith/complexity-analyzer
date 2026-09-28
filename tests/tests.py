@@ -2,10 +2,11 @@ from complexity_analyzer import analyze
 
 
 def test(arr):
-    total = 0
 
     for x in arr:
-        total += x
+        temp = [0] * len(arr)
+
+    return 0
 
 result = analyze(test)
 
