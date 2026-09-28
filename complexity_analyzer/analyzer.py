@@ -89,7 +89,7 @@ class ComplexityAnalyzer(ast.NodeVisitor):
                 self.record_allocation(
                     variable,
                     complexity,
-                    reason
+                    reason,
                     retained = False
                 )
 
