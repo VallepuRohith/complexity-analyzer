@@ -1,3 +1,4 @@
+import os
 import textwrap
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -193,6 +194,28 @@ def get_examples():
             """)
         }
     ]
+
+
+
+# Serve frontend static assets if built (for all-in-one web deployment)
+frontend_dist = os.path.join(os.path.dirname(__file__), "frontend", "dist")
+if os.path.exists(frontend_dist):
+    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import FileResponse
+    from fastapi import HTTPException
+
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}")
+    def serve_frontend(full_path: str):
+        if full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        file_path = os.path.join(frontend_dist, full_path)
+        if full_path and os.path.exists(file_path) and os.path.isfile(file_path):
+            return FileResponse(file_path)
+        return FileResponse(os.path.join(frontend_dist, "index.html"))
 
 
 if __name__ == "__main__":

@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import './App.css';
 
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 const DEFAULT_CODE = `def process_elements(arr):
     for i in range(10):
         for j in range(5):
@@ -123,7 +125,7 @@ export default function App() {
 
   // Fetch presets from backend API on mount
   useEffect(() => {
-    fetch('/api/examples')
+    fetch(`${API_BASE}/api/examples`)
       .then((res) => {
         if (!res.ok) throw new Error("Could not fetch examples");
         return res.json();
@@ -163,7 +165,7 @@ export default function App() {
     const startTime = performance.now();
 
     try {
-      const response = await fetch('/api/analyze', {
+      const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: codeToAnalyze }),

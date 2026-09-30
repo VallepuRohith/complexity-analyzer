@@ -1,0 +1,13 @@
+services:
+  # All-in-one FastAPI backend + React frontend container
+  - type: web
+    name: complexity-analyzer
+    env: docker
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8000
