@@ -1,0 +1,10 @@
+# FastAPI web framework and ASGI server
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.8.0
+
+# Production ASGI server for Linux deployments (Render, Railway, Heroku, etc.)
+gunicorn>=22.0.0
+
+# Multipart form data support
+python-multipart>=0.0.9

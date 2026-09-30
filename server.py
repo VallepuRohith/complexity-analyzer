@@ -196,5 +196,10 @@ def get_examples():
 
 
 if __name__ == "__main__":
+    import os
     import uvicorn
-    uvicorn.run("server:app", host="127.0.0.1", port=8000, reload=True)
+    host = os.environ.get("HOST", "0.0.0.0")
+    port = int(os.environ.get("PORT", 8000))
+    reload = os.environ.get("ENV", "development").lower() != "production"
+    uvicorn.run("server:app", host=host, port=port, reload=reload)
+
